@@ -1,18 +1,19 @@
-"""Redis 캐시 클래스를 제공하는 모듈입니다."""
+"""Redis 캐시를 제공하는 모듈입니다."""
 
 import json
 from typing import Any, Optional
 from redis import Redis
-from ..core.config import get_settings
 
-settings = get_settings()
+from .base import BaseCache
+from ..core.settings import get_settings
 
 
-class RedisCache:
+class RedisCache(BaseCache):
     """Redis 캐시 클래스입니다."""
 
     def __init__(self):
         """Redis 캐시를 초기화합니다."""
+        settings = get_settings()
         self.redis = Redis.from_url(settings.REDIS_URL, decode_responses=True)
 
     async def get(self, key: str) -> Optional[Any]:
