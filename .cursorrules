@@ -1,0 +1,100 @@
+{
+    "python": {
+        "max_line_length": 120,
+        "indent_size": 4,
+        "quote_type": "double",
+        "allow_trailing_comma": true,
+        "blank_lines_between_functions": 2,
+        "imports": {
+            "sort": true,
+            "group_by_type": true,
+            "groups": [
+                "stdlib",
+                "third_party",
+                "local"
+            ]
+        },
+        "docstring": {
+            "required": true,
+            "style": "google"
+        },
+        "naming": {
+            "function": "snake_case",
+            "variable": "snake_case",
+            "class": "PascalCase",
+            "constant": "UPPER_CASE"
+        },
+        "type_hints": {
+            "required": true
+        },
+        "dependencies": {
+            "fastapi": {
+                "version": "0.115.11",
+                "required_packages": [
+                    "uvicorn>=0.34.0"
+                ]
+            },
+            "langchain": {
+                "version": "0.3.20",
+                "required_packages": [
+                    "langchain-core>=0.3.45",
+                    "langchain-community>=0.3.19",
+                    "langchain-openai>=0.3.8"
+                ]
+            },
+            "sqlalchemy": {
+                "version": "2.0.27",
+                "required_packages": []
+            }
+        }
+    },
+    "markdown": {
+        "max_line_length": 80,
+        "list_indent_size": 2,
+        "heading_style": {
+            "required": true,
+            "max_level": 6,
+            "format": "atx"
+        },
+        "code_blocks": {
+            "fence_style": "backticks",
+            "language_required": true
+        },
+        "links": {
+            "reference_style": "collapsed",
+            "url_style": "angle_brackets"
+        },
+        "lists": {
+            "ordered": {
+                "style": "decimal",
+                "increment": 1
+            },
+            "unordered": {
+                "style": "hyphen"
+            }
+        },
+        "tables": {
+            "alignment": "left",
+            "padding": 1
+        },
+        "images": {
+            "alt_text_required": true,
+            "reference_style": "collapsed"
+        },
+        "frontmatter": {
+            "required": true,
+            "format": "yaml"
+        },
+        "metadata": {
+            "title_required": true,
+            "date_required": true,
+            "author_required": true
+        }
+    },
+    "general": {
+        "end_of_line": "lf",
+        "trim_trailing_whitespace": true,
+        "insert_final_newline": true,
+        "charset": "utf-8"
+    }
+}
