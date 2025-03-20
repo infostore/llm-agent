@@ -15,16 +15,19 @@ class BaseSettings(BaseSettings):
     CORS_ORIGINS: List[str] = ["*"]
 
     # 데이터베이스 설정
-    DATABASE_URL: str
+    DATABASE_URL: str = "postgresql://user:password@localhost:5432/db"
 
     # Redis 설정
-    REDIS_URL: str
+    REDIS_URL: str = "redis://localhost:6379/0"
+
+    # RabbitMQ 설정
+    RABBITMQ_URL: str = "amqp://guest:guest@localhost:5672/"
 
     # OpenAI 설정
-    OPENAI_API_KEY: str
+    OPENAI_API_KEY: str = ""
 
     # 보안 설정
-    SECRET_KEY: str
+    SECRET_KEY: str = "your-secret-key"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
