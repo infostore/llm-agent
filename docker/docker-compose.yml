@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.${ENV:-development}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - ${ENV:-development} == "development" && ../src:/app/src || /dev/null:/app/src
+    environment:
+      - ENV=${ENV:-development}
+    depends_on:
+      - db
+      - redis
+    networks:
+      - llm_agent_network
+
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-llm_agent}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - llm_agent_network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - llm_agent_network
+
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+    networks:
+      - llm_agent_network
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+
+networks:
+  llm_agent_network:
+    driver: bridge
