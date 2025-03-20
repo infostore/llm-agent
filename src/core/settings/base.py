@@ -1,45 +1,50 @@
-"""기본 설정 클래스를 정의하는 모듈입니다."""
+"""기본 설정을 정의하는 모듈입니다."""
 
-from typing import List
+from typing import List, Optional
 from pydantic_settings import BaseSettings
 
 
-class BaseConfig(BaseSettings):
+class BaseSettings(BaseSettings):
     """기본 설정 클래스입니다."""
 
     # API 설정
     API_V1_STR: str = "/api/v1"
     PROJECT_NAME: str = "LLM Agent API"
-    API_HOST: str = "0.0.0.0"
-    API_PORT: int = 8000
-    API_RELOAD: bool = True
-
-    # OpenAI 설정
-    OPENAI_API_KEY: str
-
-    # 환경 설정
-    ENVIRONMENT: str = "development"
-    LOG_LEVEL: str = "INFO"
 
     # CORS 설정
     CORS_ORIGINS: List[str] = ["*"]
 
     # 데이터베이스 설정
-    DATABASE_URL: str = "sqlite:///./app.db"
+    DATABASE_URL: str
+
+    # Redis 설정
+    REDIS_URL: str
+
+    # OpenAI 설정
+    OPENAI_API_KEY: str
 
     # 보안 설정
-    SECRET_KEY: str = "your-secret-key"
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
-    # 캐시 설정
-    REDIS_URL: str = "redis://localhost:6379/0"
+    # 로깅 설정
+    LOG_LEVEL: str = "INFO"
 
-    # 모니터링 설정
-    ENABLE_METRICS: bool = True
-    METRICS_PORT: int = 9090
+    # API 설정
+    API_HOST: str = "0.0.0.0"
+    API_PORT: int = 8000
+    API_RELOAD: bool = False
+
+    # 캐시 설정
+    CACHE_TTL: int = 300  # 5분
+
+    # 요청 제한 설정
+    RATE_LIMIT_REQUESTS: int = 100
+    RATE_LIMIT_PERIOD: int = 60  # 1분
 
     class Config:
         """Pydantic 설정 클래스입니다."""
 
-        case_sensitive = True
         env_file = ".env"
+        case_sensitive = True
