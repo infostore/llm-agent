@@ -23,6 +23,11 @@ class BaseSettings(BaseSettings):
     # RabbitMQ 설정
     RABBITMQ_URL: str = "amqp://guest:guest@localhost:5672/"
 
+    # Elasticsearch 설정
+    ELASTICSEARCH_URL: str = "http://localhost:9200"
+    ELASTICSEARCH_USERNAME: Optional[str] = None
+    ELASTICSEARCH_PASSWORD: Optional[str] = None
+
     # OpenAI 설정
     OPENAI_API_KEY: str = ""
 
