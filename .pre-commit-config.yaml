@@ -1,0 +1,107 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-json
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  - repo: https://github.com/psf/black
+    rev: 24.2.0
+    hooks:
+      - id: black
+        language_version: python3
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-docstrings
+          - flake8-bugbear
+          - flake8-comprehensions
+          - flake8-simplify
+          - flake8-return
+          - flake8-unused-arguments
+          - flake8-variables-names
+        args: [
+          "--max-line-length=120",
+          "--ignore=E203,W503",
+          "--docstring-convention=google",
+        ]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - types-all
+        args: [
+          "--ignore-missing-imports",
+          "--disallow-untyped-defs",
+          "--disallow-incomplete-defs",
+          "--check-untyped-defs",
+          "--disallow-untyped-decorators",
+          "--no-implicit-optional",
+          "--warn-redundant-casts",
+          "--warn-return-any",
+          "--warn-unreachable",
+          "--warn-unused-configs",
+          "--disallow-any-generics",
+          "--no-implicit-reexport",
+        ]
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.15.0
+    hooks:
+      - id: pyupgrade
+        args: [--py39-plus]
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.10.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.7
+    hooks:
+      - id: bandit
+        args: ["-c", "pyproject.toml"]
+        additional_dependencies:
+          - bandit[toml]
+
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.17
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          - mdformat-gfm
+          - mdformat-frontmatter
+          - mdformat-footnote
+          - mdformat-tasklist
+        args: ["--wrap", "80"]
+
+  - repo: https://github.com/streetsides/curlylint
+    rev: 0.13.0
+    hooks:
+      - id: curlylint
+        args: ["--ignore", "E402"]
+
+  - repo: https://github.com/psf/blacken-docs
+    rev: 1.15.0
+    hooks:
+      - id: blacken-docs
+        additional_dependencies:
+          - black
